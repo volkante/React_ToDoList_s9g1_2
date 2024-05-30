@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import './app.css';
-import Task from './components/Task';
-import TaskHookForm from './components/TaskHookForm';
-import PeopleForm from './components/PeopleForm';
-import { initialTasks, initialTeam } from './data';
-import { toast } from 'react-toastify';
+import { useState } from "react";
+import "./app.css";
+import Task from "./components/Task";
+import TaskHookForm from "./components/TaskHookForm";
+import PeopleForm from "./components/PeopleForm";
+import { initialTasks, initialTeam } from "./data";
+import { toast } from "react-toastify";
 
 function App() {
   const [tasks, setTasks] = useState(initialTasks);
@@ -19,9 +19,16 @@ function App() {
   }
 
   function handleComplete(id) {
-    console.log('tamamlama fonksiyonunu buraya yazın');
-    toast.success('2 idli görev tamamlandı.');
-    alert('hede');
+    // console.log('tamamlama fonksiyonunu buraya yazın');
+    const updatedTasks = [...tasks];
+    setTasks(
+      updatedTasks.map((task) => {
+        if (task.id === id) {
+          task.status = "yapıldı";
+        }
+        return task;
+      })
+    );
   }
 
   return (
@@ -43,7 +50,7 @@ function App() {
           <h2 className="column-title">Yapılacaklar</h2>
           <div className="column-list">
             {tasks
-              .filter((t) => t.status === 'yapılacak')
+              .filter((t) => t.status === "yapılacak")
               .map((t) => (
                 <Task key={t.id} taskObj={t} onComplete={handleComplete} />
               ))}
@@ -53,7 +60,7 @@ function App() {
           <h2 className="column-title">Tamamlananlar</h2>
           <div className="column-list">
             {tasks
-              .filter((t) => t.status === 'yapıldı')
+              .filter((t) => t.status === "yapıldı")
               .map((t) => (
                 <Task key={t.id} taskObj={t} />
               ))}
